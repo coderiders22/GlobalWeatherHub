@@ -6,7 +6,7 @@ A dynamic web application that provides real-time weather information for any lo
 
 The Syncloop API, which provides the weather data for this application, is included in the repository. You can download the API package by clicking the link below:
 
-[Download Syncloop API Package](https://github.com/coderiders22/GlobalWeatherHub/blob/3780c04f2ae4b3dbb59d22be8f8ffef198cfbf5f/Weather%20Api%20Syncloop.zip)
+[Download Syncloop API Package](https://github.com/coderiders22/GlobalWeatherHub/blob/5806618e5f236e42f4850e3f784cb797d4fc0b17/Syncloop%20Weather%20Api%20.zip)
 
 Once downloaded, please extract the contents and follow the setup instructions provided in the package to integrate the API into the application.
 
