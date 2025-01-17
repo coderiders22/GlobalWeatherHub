@@ -45,6 +45,9 @@ Here are some screenshots of the application:
   The updated screen after selecting a location on the map.  
   ![After Selecting Coordinates](https://github.com/coderiders22/GlobalWeatherHub/blob/f1efbb240b20f1207eac04e98d13c40b4b8b78dd/Screenshots/after%20selecting.png)
 
+- **Features a weather alert system for extreme conditions**
+   ![Alert Message](https://github.com/coderiders22/GlobalWeatherHub/blob/72784d577f0ae1df070fe729e73dbe0dcc2db6ce/Screenshots/alert%20message.png)
+
 ### Mobile & Tablet View:
 
 - **Tablet View**  
