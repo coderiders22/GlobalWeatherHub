@@ -15,6 +15,49 @@ Once downloaded, please extract the contents and follow the setup instructions p
 - Returns comprehensive weather data for specified coordinates
 - Authentication and endpoints are pre-configured in the application
 
+## Prerequisites 📋
+
+Before running this application, make sure you have:
+
+- Node.js (v12 or higher)
+- npm (Node Package Manager)
+- A modern web browser
+
+## Quick Start Guide 🚀
+
+1. Clone the repository:
+```bash
+git clone https://github.com/coderiders22/GlobalWeatherHub.git
+cd GlobalWeatherHub
+```
+
+2. Install required dependencies:
+```bash
+npm install
+npm install express cors path
+```
+
+3. Start the application:
+```bash
+node server.js
+```
+
+4. Open your web browser and navigate to:
+```
+http://localhost:3000
+```
+5. Add the token to your application**:
+   In the project, find the following line of code in server.js file:
+
+   ```javascript
+   const BEARER_TOKEN = 'Insert Bearer Token Here';
+   ```
+
+   Replace `'Insert Bearer Token Here'` with the token you generated from Syncloop API Dashboard.
+
+Once you have added your token, the application will authenticate API requests using that token.
+
+That's it! The application is now running with all necessary configurations already set up in the code.
 
 ### Local API Endpoints
 #### GET `/Weather_Info`
@@ -82,55 +125,6 @@ Here are some screenshots of the application:
   A responsive view on mobile device.  
   ![Mobile View](https://github.com/coderiders22/GlobalWeatherHub/blob/4ee1a29a3e88b730ef411b66218b165abe3d0d0c/Screenshots/mobile%20view.png)
 
-
-## Prerequisites 📋
-
-Before running this application, make sure you have:
-
-- Node.js (v12 or higher)
-- npm (Node Package Manager)
-- A modern web browser
-
-## Quick Start Guide 🚀
-
-1. Clone the repository:
-```bash
-git clone https://github.com/coderiders22/GlobalWeatherHub.git
-cd GlobalWeatherHub
-```
-
-2. Install required dependencies:
-```bash
-npm install
-npm install express cors path
-```
-
-3. Start the application:
-```bash
-node server.js
-```
-
-4. Open your web browser and navigate to:
-```
-http://localhost:3000
-```
-
-That's it! The application is now running with all necessary configurations already set up in the code.
-
-## How to Use 🎯
-
-1. When you first open the application, you'll see a welcome screen with basic instructions
-2. You can interact with the application in two ways:
-   - Click anywhere on the map to get weather information for that location
-   - Use the search bar to find a specific location
-3. The application will display:
-   - Current weather conditions
-   - Temperature details
-   - Wind speed and direction
-   - Humidity and pressure
-   - Sunrise and sunset times
-   - Local time at the selected location
-
 ## Tech Stack 💪
 
 - Frontend:
@@ -165,3 +159,9 @@ College: Punjab Engineering College, Chandigarh
 ---
 
 For any additional questions or issues, please open an issue in the repository: https://github.com/coderiders22/GlobalWeatherHub/issues
+
+
+
+
+
+
