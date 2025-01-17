@@ -121,7 +121,8 @@ The application includes comprehensive error handling for:
 ## Manav Rai
 ### manavrai454@gmail.com
 ### +91 8054776034
-### Punjab Engineering College,Chd
+### Punjab Engineering College, Chd
+
 ---
 
 For any additional questions or issues, please open an issue in the repository: https://github.com/coderiders22/GlobalWeatherHub/issues
