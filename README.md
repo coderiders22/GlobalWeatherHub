@@ -120,7 +120,6 @@ The application includes comprehensive error handling for:
 
 **Manav Rai**  
 Email: [manavrai454@gmail.com](mailto:manavrai454@gmail.com)  
-Phone: +91 8054776034  
 College: Punjab Engineering College, Chandigarh
 
 
