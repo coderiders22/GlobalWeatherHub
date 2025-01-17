@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            --card-gradient: linear-gradient(135deg, rgba(22, 28, 36, 0.95) 0%, rgba(17, 24, 39, 0.95) 100%);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #1a1c20 0%, #0f172a 100%);
+            min-height: 100vh;
+            color: #e5e7eb;
+        }
+
+        /* Welcome Overlay Styles */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .welcome-card {
+            background: rgba(17, 25, 40, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .welcome-icon {
+            font-size: 4rem;
+            color: #3b82f6;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .get-started-btn {
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-weight: 500;
+        }
+
+        .get-started-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .instruction-steps {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .instruction-step {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* Existing Styles */
+        .glass-effect {
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .containers {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            font-size: larger;
+        }
+
+        .map-container {
+            position: relative;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-top: 60px;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 90%;
+            width: 600px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 5px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .search-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: #9ca3af;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1rem;
+            color: #1f2937;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .weather-card {
+            background: var(--card-gradient);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .parameter-card {
+            background: rgba(17, 24, 39, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .weather-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .location-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 1rem;
+            color: #3b82f6;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .welcome-card {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .instruction-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .instruction-step {
+                width: 100%;
+                max-width: none;
+            }
+
+            .search-container {
+                width: 95%;
+            }
+        }
+        .coordinates-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(17, 25, 40, 0.9);
+    border-radius: 12px;
+    padding: 12px 16px;
+    z-index: 1000;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+    max-width: 300px;
+}
+
+.coordinates-text {
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    margin-right: 24px;
+}
+
+.coordinates-value {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover {
+    color: #ef4444;
+}
+
+.weather-coordinates {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.weather-coordinates i {
+    color: #3b82f6;
+    margin-right: 8px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+    .coordinates-container {
+        top: auto;
+        bottom: 20px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .coordinates-text {
+        font-size: 0.9rem;
+    }
+}

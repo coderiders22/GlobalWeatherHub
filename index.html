@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Weather Explorer</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            --card-gradient: linear-gradient(135deg, rgba(22, 28, 36, 0.95) 0%, rgba(17, 24, 39, 0.95) 100%);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #1a1c20 0%, #0f172a 100%);
+            min-height: 100vh;
+            color: #e5e7eb;
+        }
+
+        /* Welcome Overlay Styles */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .welcome-card {
+            background: rgba(17, 25, 40, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .welcome-icon {
+            font-size: 4rem;
+            color: #3b82f6;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .get-started-btn {
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-weight: 500;
+        }
+
+        .get-started-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .instruction-steps {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .instruction-step {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* Existing Styles */
+        .glass-effect {
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .containers {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            font-size: larger;
+        }
+
+        .map-container {
+            position: relative;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-top: 60px;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 90%;
+            width: 600px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 5px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .search-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: #9ca3af;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1rem;
+            color: #1f2937;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .weather-card {
+            background: var(--card-gradient);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .parameter-card {
+            background: rgba(17, 24, 39, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .weather-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .location-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 1rem;
+            color: #3b82f6;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .welcome-card {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .instruction-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .instruction-step {
+                width: 100%;
+                max-width: none;
+            }
+
+            .search-container {
+                width: 95%;
+            }
+        }
+        .coordinates-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(17, 25, 40, 0.9);
+    border-radius: 12px;
+    padding: 12px 16px;
+    z-index: 1000;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+    max-width: 300px;
+}
+
+.coordinates-text {
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    margin-right: 24px;
+}
+
+.coordinates-value {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover {
+    color: #ef4444;
+}
+
+.weather-coordinates {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.weather-coordinates i {
+    color: #3b82f6;
+    margin-right: 8px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+    .coordinates-container {
+        top: auto;
+        bottom: 20px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .coordinates-text {
+        font-size: 0.9rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Welcome Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card">
+            <i class="fas  fa-globe-americas welcome-icon"></i>
+            <h2 class="text-3xl font-bold mb-4 gradient-text">Welcome to Global Weather Explorer!</h2>
+            <p class="text-xl text-gray-300 mb-6">Discover real-time weather conditions anywhere in the world</p>
+            
+            <div class="instruction-steps">
+                <div class="instruction-step">
+                    <i class="fas fa-mouse-pointer text-2xl text-blue-500 mb-2"></i>
+                    <p class="text-sm text-gray-300">Click anywhere on the map</p>
+                </div>
+                <div class="instruction-step">
+                    <i class="fas fa-search text-2xl text-blue-500 mb-2"></i>
+                    <p class="text-sm text-gray-300">Or search for a location</p>
+                </div>
+                <div class="instruction-step">
+                    <i class="fas fa-cloud-sun text-2xl text-blue-500 mb-2"></i>
+                    <p class="text-sm text-gray-300">Get detailed weather info</p>
+                </div>
+            </div>
+
+            <button class="get-started-btn" onclick="startExploring()">
+                Start Exploring
+                <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="containers">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-bold mb-4 gradient-text">
+                <i class="fas fa-globe-americas mr-3" style="font-size: 2rem; color: #3b82f6;"></i>
+           <span style="color: #3b82f6;" >  Global Weather</span>   Explorer
+            </h1>
+    
+            <p class="text-xl text-gray-400">
+                Explore real-time weather conditions anywhere in the world
+            </p>
+        </header>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input 
+                type="text" 
+                class="search-bar" 
+                placeholder="Search any location..." 
+                id="location-search" 
+            />
+        </div>
+        
+        <div id="location-name" class="location-name"></div>
+
+        <div class="map-container glass-effect">
+            <div id="map"></div>
+        </div>
+
+        <div id="weather-alerts"></div>
+        
+        <div class="weather-grid">
+            <div class="weather-card">
+                <h2 class="text-2xl font-bold mb-4">
+                    <i class="fas fa-thermometer-half text-blue-500 mr-2"></i>
+                    Current Conditions
+                </h2>
+                <div id="current-conditions"></div>
+            </div>
+
+            <div class="weather-card">
+                <h2 class="text-2xl font-bold mb-4">
+                    <i class="fas fa-wind text-blue-500 mr-2"></i>
+                    Atmospheric Conditions
+                </h2>
+                <div id="atmospheric-conditions"></div>
+            </div>
+
+            <div class="weather-card">
+                <h2 class="text-2xl font-bold mb-4">
+                    <i class="fas fa-sun text-blue-500 mr-2"></i>
+                    Sun & Moon
+                </h2>
+                <div id="sun-moon-info"></div>
+            </div>
+        </div>
+
+
+        <footer class="glass-effect mt-8">
+            <p class="text-gray-400">© 2025   <i class="fas fa-globe-americas mr-3" style="font-size: 1rem; color: #3b82f6;"></i>
+                <span style="color: #3b82f6;" >  Global Weather</span>   Explorer. Designed by Manav Rai</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script>
+        // Initialize map
+        const map = L.map('map', {
+            worldCopyJump: true,
+            minZoom: 2
+        }).setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '©OpenStreetMap contributors',
+            subdomains: 'abc',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Welcome overlay functionality
+        function startExploring() {
+            const overlay = document.getElementById('welcomeOverlay');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
+
+        // Add initial map tooltip
+        const hintTooltip = L.tooltip({
+            permanent: true,
+            direction: 'top',
+            className: 'glass-effect'
+        })
+            .setLatLng([20, 0])
+            .setContent('Click anywhere on the map to get weather information')
+            .addTo(map);
+
+        map.once('click', () => {
+            map.removeLayer(hintTooltip);
+        });
+
+        let currentMarker = null;
+        let weatherChart = null;
+
+        function showLoading() {
+            document.querySelector('.loading-overlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.querySelector('.loading-overlay').style.display = 'none';
+        }
+
+        async function geocodeLocation(query) {
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                if (data.length > 0) {
+                    return {
+                        lat: parseFloat(data[0].lat),
+                        lon: parseFloat(data[0].lon),
+                        name: data[0].display_name
+                    };
+                }
+                throw new Error('Location not found');
+            } catch (error) {
+                throw new Error('Geocoding failed');
+            }
+        }
+
+        function updateMarker(lat, lon) {
+            if (currentMarker) {
+                map.removeLayer(currentMarker);
+            }
+            currentMarker = L.marker([lat, lon]).addTo(map);
+            map.setView([lat, lon], 10);
+        }
+
+        function updateLocationName(name) {
+            document.getElementById('location-name').textContent = name;
+        }
+
+        function formatTemp(kelvin) {
+            return (kelvin - 273.15).toFixed(1);
+        }
+
+        async function getWeatherData(lat, lon) {
+            showLoading();
+            try {
+                const response = await fetch(`/Weather_Info?lt=${lat}&ln=${lon}`);
+                if (!response.ok) throw new Error('Weather data fetch failed');
+                const data = await response.json();
+                updateWeatherDisplay(data.response.jsonDoc);
+            } catch (error) {
+                showError(error);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function updateWeatherDisplay(weather) {
+            // Current Conditions
+            document.getElementById('current-conditions').innerHTML = `
+                <div class="text-center mb-6">
+                    <i class="fas fa-${getWeatherIcon(weather.weather[0].main)} text-5xl text-blue-500"></i>
+                    <h3 class="text-3xl font-bold mt-4">${formatTemp(weather.main.temp)}°C</h3>
+                    <p class="text-xl text-gray-400">${weather.weather[0].description}</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center">
+                        <p class="text-gray-400">Min</p>
+                        <p class="text-2xl">${formatTemp(weather.main.temp_min)}°C</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-400">Max</p>
+                        <p class="text-2xl">${formatTemp(weather.main.temp_max)}°C</p>
+                    </div>
+                </div>
+                <div class="weather-coordinates mt-4">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${weather.coord.lat.toFixed(4)}°, ${weather.coord.lon.toFixed(4)}°</span>
+                </div>
+            `;
+
+            // Atmospheric Conditions
+            document.getElementById('atmospheric-conditions').innerHTML = `
+                <div class="space-y-4">
+                    <div class="parameter-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-tint text-2xl text-blue-500 mr-4"></i>
+                            <div>
+                                <div class="text-gray-400">Humidity</div>
+                                <div class="text-2xl font-bold">${weather.main.humidity}%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameter-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-wind text-2xl text-blue-500 mr-4"></i>
+                            <div>
+                                <div class="text-gray-400">Wind Speed</div>
+                                <div class="text-2xl font-bold">${weather.wind.speed} m/s</div>
+                                <div class="text-sm text-gray-400">Direction: ${getWindDirection(weather.wind.deg)}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parameter-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-compress-alt text-2xl text-blue-500 mr-4"></i>
+                            <div>
+                                <div class="text-gray-400">Pressure</div>
+                                <div class="text-2xl font-bold">${weather.main.pressure} hPa</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parameter-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-eye text-2xl text-blue-500 mr-4"></i>
+                            <div>
+                                <div class="text-gray-400">Visibility</div>
+                                <div class="text-2xl font-bold">${(weather.visibility / 1000).toFixed(1)} km</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Sun & Moon Info
+            document.getElementById('sun-moon-info').innerHTML = `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <i class="fas fa-sunrise text-4xl text-yellow-500 mb-2"></i>
+                            <p class="text-gray-400">Sunrise</p>
+                            <p class="text-2xl font-bold">${formatTime(weather.sys.sunrise, weather.timezone)}</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-sunset text-4xl text-orange-500 mb-2"></i>
+                            <p class="text-gray-400">Sunset</p>
+                            <p class="text-2xl font-bold">${formatTime(weather.sys.sunset, weather.timezone)}</p>
+                        </div>
+                    </div>
+                    <div class="parameter-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-2xl text-blue-500 mr-4"></i>
+                            <div>
+                                <div class="text-gray-400">Local Time</div>
+                                <div class="text-2xl font-bold">${getCurrentTime(weather.timezone)}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+           
+            checkWeatherAlerts(weather);
+        }
+
+     
+        
+
+        function getCurrentTime(timezone) {
+            const date = new Date();
+            const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+            const localTime = new Date(utc + (timezone * 1000));
+            return localTime.toLocaleTimeString();
+        }
+
+        function getWindDirection(degrees) {
+            const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
+                              'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+            const index = Math.round(((degrees %= 360) < 0 ? degrees + 360 : degrees) / 22.5) % 16;
+            return directions[index];
+        }
+
+        function getWeatherIcon(weatherCode) {
+            const icons = {
+                'Clear': 'sun',
+                'Clouds': 'cloud',
+                'Rain': 'cloud-rain',
+                'Snow': 'snowflake',
+                'Thunderstorm': 'bolt',
+                'Drizzle': 'cloud-rain',
+                'Mist': 'smog',
+                'Smoke': 'smog',
+                'Haze': 'smog',
+                'Dust': 'smog',
+                'Fog': 'smog',
+                'Sand': 'smog',
+                'Ash': 'smog',
+                'Squall': 'wind',
+                'Tornado': 'tornado'
+            };
+            return icons[weatherCode] || 'cloud';
+        }
+
+        function formatTime(timestamp, timezone) {
+            const date = new Date((timestamp + timezone) * 1000);
+            return date.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'UTC'
+            });
+        }
+
+     
+
+        function checkWeatherAlerts(weather) {
+            const alertsContainer = document.getElementById('weather-alerts');
+            alertsContainer.innerHTML = '';
+
+            if (weather.main.temp > 303.15) { // Above 30°C
+                addWeatherAlert('Extreme Heat Warning', 'High temperatures detected. Stay hydrated and avoid prolonged sun exposure.');
+            }
+            if (weather.wind.speed > 10) {
+                addWeatherAlert('Strong Winds Alert', 'Strong winds may affect outdoor activities.');
+            }
+            if (weather.main.humidity > 85) {
+                addWeatherAlert('High Humidity Alert', 'High humidity levels may affect comfort and health.');
+            }
+        }
+
+        function addWeatherAlert(title, message) {
+            const alertsContainer = document.getElementById('weather-alerts');
+            alertsContainer.innerHTML += `
+                <div class="weather-alert">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-500 mr-3"></i>
+                        <div>
+                            <h4 class="font-bold text-red-500">${title}</h4>
+                            <p class="text-gray-300">${message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showError(error) {
+            const alertsContainer = document.getElementById('weather-alerts');
+            alertsContainer.innerHTML = `
+                <div class="weather-alert">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                        <div>
+                            <h4 class="font-bold text-red-500">Error</h4>
+                            <p class="text-gray-300">${error.message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('location-search');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(async () => {
+                const query = e.target.value;
+                if (query.length < 3) return;
+                
+                showLoading();
+                try {
+                    const location = await geocodeLocation(query);
+                    updateLocationName(location.name);
+                    updateMarker(location.lat, location.lon);
+                    getWeatherData(location.lat, location.lon);
+                } catch (error) {
+                    showError(error);
+                } finally {
+                    hideLoading();
+                }
+            }, 500);
+        });
+
+        // Map click handler
+        map.on('click', async (e) => {
+            const { lat, lng } = e.latlng;
+            showLoading();
+            try {
+                const location = await geocodeLocation(`${lat},${lng}`);
+                updateLocationName(location.name);
+                updateMarker(lat, lng);
+                getWeatherData(lat, lng);
+            } catch (error) {
+                showError(error);
+            } finally {
+                hideLoading();
+            }
+        });
+    </script>
+</body>
+</html>
