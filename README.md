@@ -27,6 +27,35 @@ This project was created to fulfill the following requirements:
 - Responsive design with glass-morphism UI
 - Coordinates display for clicked locations
 
+  ## Screenshots 📸
+
+Here are some screenshots of the application:
+
+### Desktop Views:
+
+- **Welcome Screen**  
+  This is the first screen that greets users.  
+  ![Welcome Screen](https://github.com/coderiders22/GlobalWeatherHub/blob/f1efbb240b20f1207eac04e98d13c40b4b8b78dd/Screenshots/welcome%20screen.png)
+
+- **Before Selecting Map Coordinates**  
+  The screen before any interaction with the map.  
+  ![Before Selecting Coordinates](https://github.com/coderiders22/GlobalWeatherHub/blob/f1efbb240b20f1207eac04e98d13c40b4b8b78dd/Screenshots/before%20selecting%20.png)
+
+- **After Selecting Map Coordinates**  
+  The updated screen after selecting a location on the map.  
+  ![After Selecting Coordinates](https://github.com/coderiders22/GlobalWeatherHub/blob/f1efbb240b20f1207eac04e98d13c40b4b8b78dd/Screenshots/after%20selecting.png)
+
+### Mobile & Tablet View:
+
+- **Tablet View**  
+  A responsive view on tablet device.  
+  ![Tablet View](https://github.com/coderiders22/GlobalWeatherHub/blob/4ee1a29a3e88b730ef411b66218b165abe3d0d0c/Screenshots/tablet%20view.png)
+
+- **Mobile View**  
+  A responsive view on mobile device.  
+  ![Mobile View](https://github.com/coderiders22/GlobalWeatherHub/blob/4ee1a29a3e88b730ef411b66218b165abe3d0d0c/Screenshots/mobile%20view.png)
+
+
 ## Prerequisites 📋
 
 Before running this application, make sure you have:
