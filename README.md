@@ -2,6 +2,30 @@
 
 A dynamic web application that provides real-time weather information for any location on Earth, built as part of an assignment to demonstrate REST API integration using Syncloop. Users can interact with a leaflet map to get detailed weather data for specific coordinates.
 
+## Syncloop API Integration 🔌
+
+The Syncloop API, which provides the weather data for this application, is included in the repository. You can download the API package by clicking the link below:
+
+[Download Syncloop API Package](https://github.com/coderiders22/GlobalWeatherHub/blob/3780c04f2ae4b3dbb59d22be8f8ffef198cfbf5f/Weather%20Api%20Syncloop.zip)
+
+Once downloaded, please extract the contents and follow the setup instructions provided in the package to integrate the API into the application.
+
+### Syncloop API
+- Custom REST API built on Syncloop
+- Returns comprehensive weather data for specified coordinates
+- Authentication and endpoints are pre-configured in the application
+
+
+### Local API Endpoints
+#### GET `/Weather_Info`
+- Parameters:
+  - `lt`: Latitude
+  - `ln`: Longitude
+- Returns: Weather information from Syncloop API
+
+#### GET `/`
+- Serves the main HTML page
+
 ## Assignment Overview 📝
 
 This project was created to fulfill the following requirements:
@@ -122,35 +146,6 @@ That's it! The application is now running with all necessary configurations alre
   - Express.js
   - Syncloop API for weather data
   - OpenStreetMap for geocoding
-
-### Syncloop API
-- Custom REST API built on Syncloop
-- Returns comprehensive weather data for specified coordinates
-- Authentication and endpoints are pre-configured in the application
-
-## Syncloop API Integration 🔌
-
-The Syncloop API, which provides the weather data for this application, is included in the repository. You can download the API package by clicking the link below:
-
-[Download Syncloop API Package](https://github.com/coderiders22/GlobalWeatherHub/blob/3780c04f2ae4b3dbb59d22be8f8ffef198cfbf5f/Weather%20Api%20Syncloop.zip)
-
-Once downloaded, please extract the contents and follow the setup instructions provided in the package to integrate the API into the application.
-
-### Syncloop API
-- Custom REST API built on Syncloop
-- Returns comprehensive weather data for specified coordinates
-- Authentication and endpoints are pre-configured in the application
-
-
-### Local API Endpoints
-#### GET `/Weather_Info`
-- Parameters:
-  - `lt`: Latitude
-  - `ln`: Longitude
-- Returns: Weather information from Syncloop API
-
-#### GET `/`
-- Serves the main HTML page
 
 ## Error Handling ⚠️
 
