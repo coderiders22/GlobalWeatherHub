@@ -57,7 +57,7 @@ http://localhost:3000
 
 Once you have added your token, the application will authenticate API requests using that token.
 
-That's it! The application is now running with all necessary configurations already set up in the code.
+That's it! The application is now running with all necessary configurations set up in the code.
 
 ### Local API Endpoints
 #### GET `/Weather_Info`
