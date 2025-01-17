@@ -34,9 +34,8 @@ Before running this application, make sure you have:
 - Node.js (v12 or higher)
 - npm (Node Package Manager)
 - A modern web browser
-- Syncloop API access token
 
-## Installation 🚀
+## Quick Start Guide 🚀
 
 1. Clone the repository:
 ```bash
@@ -44,52 +43,23 @@ git clone https://github.com/coderiders22/GlobalWeatherHub.git
 cd GlobalWeatherHub
 ```
 
-2. Install dependencies:
+2. Install required dependencies:
 ```bash
+npm install
 npm install express cors path
 ```
 
-3. Set up your environment:
-   - The application requires a Syncloop API Bearer token
-   - Replace the `BEARER_TOKEN` in `server.js` with your Syncloop API token
-   - Ensure the Syncloop API endpoint is correctly configured:
-     ```javascript
-     https://cloud.syncloop.com/tenant/1737057817390/packages.PEC_training.api.Weather_Info.main
-     ```
-
-## API Integration 🔌
-
-### Syncloop API
-- This project uses a custom REST API built on Syncloop
-- Endpoint: `packages.PEC_training.api.Weather_Info.main`
-- Authentication: Bearer Token
-- Parameters:
-  - `lt`: Latitude
-  - `ln`: Longitude
-- Returns: Comprehensive weather data for the specified coordinates
-
-### Local API Endpoints
-#### GET `/Weather_Info`
-- Wrapper for the Syncloop API
-- Parameters:
-  - `lt`: Latitude
-  - `ln`: Longitude
-- Returns: Weather information from Syncloop API
-
-#### GET `/`
-- Serves the main HTML page
-
-## Running the Application 💻
-
-1. Start the server:
+3. Start the application:
 ```bash
 node server.js
 ```
 
-2. Open your web browser and navigate to:
+4. Open your web browser and navigate to:
 ```
 http://localhost:3000
 ```
+
+That's it! The application is now running with all necessary configurations already set up in the code.
 
 ## How to Use 🎯
 
@@ -121,6 +91,23 @@ http://localhost:3000
   - Syncloop API for weather data
   - OpenStreetMap for geocoding
 
+## API Integration 🔌
+
+### Syncloop API
+- Custom REST API built on Syncloop
+- Returns comprehensive weather data for specified coordinates
+- Authentication and endpoints are pre-configured in the application
+
+### Local API Endpoints
+#### GET `/Weather_Info`
+- Parameters:
+  - `lt`: Latitude
+  - `ln`: Longitude
+- Returns: Weather information from Syncloop API
+
+#### GET `/`
+- Serves the main HTML page
+
 ## Error Handling ⚠️
 
 The application includes comprehensive error handling for:
@@ -128,14 +115,13 @@ The application includes comprehensive error handling for:
 - Failed API requests
 - Geocoding failures
 - Network issues
-- Syncloop API authentication errors
 
 ## Author ✍️
 
 Manav Rai
 manavrai454@gmail.com
-Punjab Engineering College,Chandigarh
-
++91 8054776034
+Punjab Engineering College,Chd
 ---
 
 For any additional questions or issues, please open an issue in the repository: https://github.com/coderiders22/GlobalWeatherHub/issues
