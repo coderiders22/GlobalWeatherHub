@@ -4,7 +4,7 @@ A dynamic web application that provides real-time weather information for any lo
 
 Live Application 🔗
 
-Explore the deployed version of GlobalWeatherHub here:[GlobalWeatherHub Live Platform](https://globalweatherhub.koyeb.app/)
+Explore the deployed version of GlobalWeatherHub here: [GlobalWeatherHub Live Platform](https://globalweatherhub.koyeb.app/)
 
 ## Syncloop API Integration 🔌
 
