@@ -2,6 +2,10 @@
 
 A dynamic web application that provides real-time weather information for any location on Earth, built as part of an assignment to demonstrate REST API integration using Syncloop. Users can interact with a leaflet map to get detailed weather data for specific coordinates.
 
+Live Application 🔗
+
+Explore the deployed version of GlobalWeatherHub here:[GlobalWeatherHub Live Platform](https://globalweatherhub.koyeb.app/)
+
 ## Syncloop API Integration 🔌
 
 The Syncloop API, which provides the weather data for this application, is included in the repository. You can download the API package by clicking the link below:
@@ -50,7 +54,7 @@ http://localhost:8000
    In the project, find the following line of code in server.js file:
 
    ```javascript
-   const BEARER_TOKEN = 'Insert Bearer Token Here';
+   const BEARER_TOKEN = 'Replace existing token with your token generated through the platform';
    ```
 
    Replace `'Insert Bearer Token Here'` with the token you generated from Syncloop API Dashboard.
