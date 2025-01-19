@@ -44,7 +44,7 @@ node server.js
 
 4. Open your web browser and navigate to:
 ```
-http://localhost:3000
+http://localhost:8000
 ```
 5. Add the token to your application**:
    In the project, find the following line of code in server.js file:
