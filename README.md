@@ -154,7 +154,6 @@ Here are some screenshots of the application:
   - JavaScript
   - Leaflet.js for mapping
   - Font Awesome for icons
-  - Chart.js for data visualization
 
 - Backend:
   - Node.js
