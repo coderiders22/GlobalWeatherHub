@@ -87,7 +87,7 @@ That's it! The application is now running with all necessary configurations set 
 - Serves the main HTML page
 
 > [!NOTE]
->## Assignment Overview 📝
+> ## Assignment Overview 📝
 
 This project was created to fulfill the following requirements:
 1. Create REST APIs on Syncloop
@@ -113,7 +113,8 @@ This project was created to fulfill the following requirements:
 - Responsive design with glass-morphism UI
 - Coordinates display for clicked locations
 
-  ## Screenshots 📸
+> [!IMPORTANT]
+> ## Screenshots 📸
 
 Here are some screenshots of the application:
 
@@ -144,7 +145,8 @@ Here are some screenshots of the application:
   A responsive view on mobile device.  
   ![Mobile View](https://github.com/coderiders22/GlobalWeatherHub/blob/4ee1a29a3e88b730ef411b66218b165abe3d0d0c/Screenshots/mobile%20view.png)
 
-## Tech Stack 💪
+> [!NOTE]
+> ## Tech Stack 💪
 
 - Frontend:
   - HTML5
