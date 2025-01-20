@@ -29,7 +29,8 @@ Before running this application, make sure you have:
 - npm (Node Package Manager)
 - A modern web browser
 
-## Quick Start Guide 🚀
+> [!GUIDE]
+> ## Quick Start Guide 🚀
 
 1. Clone the repository:
 ```bash
