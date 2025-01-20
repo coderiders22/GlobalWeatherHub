@@ -7,6 +7,7 @@ Live Application 🔗
 
 Explore the deployed version of GlobalWeatherHub here: [GlobalWeatherHub Live Platform](https://globalweatherhub.koyeb.app/)
 
+> [!NOTE]
 ## Syncloop API Integration 🔌
 
 The Syncloop API, which provides the weather data for this application, is included in the repository. You can download the API package by clicking the link below:
