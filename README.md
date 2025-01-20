@@ -2,6 +2,7 @@
 
 A dynamic web application that provides real-time weather information for any location on Earth, built as part of an assignment to demonstrate REST API integration using Syncloop. Users can interact with a leaflet map to get detailed weather data for specific coordinates.
 
+> [!IMPORTANT]
 Live Application 🔗
 
 Explore the deployed version of GlobalWeatherHub here: [GlobalWeatherHub Live Platform](https://globalweatherhub.koyeb.app/)
