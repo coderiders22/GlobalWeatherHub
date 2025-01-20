@@ -29,7 +29,7 @@ Before running this application, make sure you have:
 - npm (Node Package Manager)
 - A modern web browser
 
-> [!GUIDE]
+> [! GUIDE]
 > ## Quick Start Guide 🚀
 
 1. Clone the repository:
