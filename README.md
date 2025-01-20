@@ -7,6 +7,14 @@ Live Application 🔗
 
 Explore the deployed version of GlobalWeatherHub here: [GlobalWeatherHub Live Platform](https://globalweatherhub.koyeb.app/)
 
+> [!CAUTION]
+> If you encounter an error message saying **"Weather data fetch failed"**, you may need to update the token used in the `server.js` file.
+
+- Open `server.js` and locate the following line of code:
+  ```javascript
+  const BEARER_TOKEN = 'Replace the existing token with the new one from your SyncLoop API dashboard';
+
+
 > [!NOTE]
 > ## Syncloop API Integration 🔌
 
@@ -16,7 +24,8 @@ The Syncloop API, which provides the weather data for this application, is inclu
 
 Once downloaded, please extract the contents and follow the setup instructions provided in the package to integrate the API into the application.
 
-### Syncloop API
+> [!NOTE]
+> ### Syncloop API
 - Custom REST API built on Syncloop
 - Returns comprehensive weather data for specified coordinates
 - Authentication and endpoints are pre-configured in the application
@@ -66,6 +75,7 @@ Once you have added your token, the application will authenticate API requests u
 
 That's it! The application is now running with all necessary configurations set up in the code.
 
+
 ### Local API Endpoints
 #### GET `/Weather_Info`
 - Parameters:
@@ -76,7 +86,8 @@ That's it! The application is now running with all necessary configurations set 
 #### GET `/`
 - Serves the main HTML page
 
-## Assignment Overview 📝
+> [!NOTE]
+>## Assignment Overview 📝
 
 This project was created to fulfill the following requirements:
 1. Create REST APIs on Syncloop
@@ -86,7 +97,8 @@ This project was created to fulfill the following requirements:
    - Capture coordinates on map click
    - Fetch weather information using those coordinates
 
-## Features 🌟
+> [!IMPORTANT]
+>## Features 🌟
 
 - Integration with Syncloop REST API for weather data
 - Interactive map interface using Leaflet.js
